@@ -159,6 +159,12 @@ func Strings(iface interface{}) error {
 		return errors.New("Not a pointer")
 	}
 	ift := reflect.Indirect(ifv).Type()
+
+	// check struct type
+	if ift.Kind() != reflect.Struct{
+		return nil
+	}
+
 	for i := 0; i < ift.NumField(); i++ {
 		v := ift.Field(i)
 		el := reflect.Indirect(ifv.Elem().FieldByName(v.Name))
